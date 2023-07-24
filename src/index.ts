@@ -11,6 +11,7 @@ dataSource
         const port = process.env.PORT || 5000;
         // Start the Server
         app.listen(port, () => {
+            Logger.info(`Environment set to "${process.env.NODE_ENV}".`);
             Logger.info(`App running on port ${port}`);
         });
     })

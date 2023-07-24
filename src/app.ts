@@ -2,6 +2,8 @@ require('dotenv').config();
 import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import { router } from './routes';
+//const routes = require('./routes');
 
 import { Logger } from '../logger';
 
@@ -14,6 +16,10 @@ app.use(helmet());
 app.get('/logs', (req: Request, res: Response) => {
     Logger.debug('Health-checking');
 });
+
+// Use the routes from routes.js
+app.use('/', router);
+
 
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
     Logger.debug(`${req}`);
