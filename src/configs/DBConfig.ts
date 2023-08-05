@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
+//import { Ads } from '../models/user';
 export const dataSource = new DataSource({
     type: 'postgres',
     host: process.env.DB_HOST,
@@ -9,7 +10,8 @@ export const dataSource = new DataSource({
     database: process.env.DB_DATABASE,
     synchronize: true,
     logging: false,
-    entities: [`${__dirname}/models/*.ts`, `${__dirname}/models/*.js`],
+    entities: [`src/models/*.ts`, `src/models/*.js`],
+    // entities: [`${__dirname}/models/*.ts`, `${__dirname}/models/*.js`],
     migrations: ['src/migrations/**/*{.ts,.js}'],
     subscribers: [],
 });
