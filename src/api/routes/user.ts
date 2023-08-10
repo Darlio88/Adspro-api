@@ -10,6 +10,7 @@ export default class UserRoutes extends  CommonRoutesConfig{
     } 
     configureRoutes(){
         this.app.route('/users').get(UserController.getUsers);
+        this.app.route('/user/:id').get(UserController.getUser);
         this.app.route('/users/register').get(UserController.registerUsers);
         this.app.route('/users/login').get(UserController.loginUsers);
         return this.app;

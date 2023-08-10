@@ -1,25 +1,31 @@
-import { Request, Response } from "express";
-import { UserRepository } from "../repositories";
-import { User } from "../models/user";
+import { Request, Response } from 'express';
+import { UserRepository } from '../repositories';
+import { User } from '../models/user';
 import bcrypt = require('bcrypt');
 const validator = require('validator');
 
 class UserService {
     private readonly userRepository: typeof UserRepository;
 
-    constructor(){
+    constructor() {
         this.userRepository = UserRepository;
     }
 
     //getting all users
-    public getAll = async (req: Request, res: Response) :Promise<User[]> => {
+    public getAll = async (req: Request, res: Response): Promise<User[]> => {
         const users = await this.userRepository.find();
         return users;
     };
 
     //Creating a new user
-    public Register = async (firstName, lastName, userName, email, password) => {
-        if (!firstName || !lastName || !userName ||  !email || !password) {
+    public Register = async (
+        firstName,
+        lastName,
+        userName,
+        email,
+        password
+    ) => {
+        if (!firstName || !lastName || !userName || !email || !password) {
             throw Error('All fields must be filled');
         }
         if (!validator.isEmail(email)) {
@@ -73,6 +79,15 @@ class UserService {
         return user;
     };
 
+    /**
+     * Retrieve a single user
+     */
+    public getuser = async (req: Request, res: Response, id: number) => {
+        const user = await this.userRepository.findOne({
+            where: { id: id },
+        });
+        return user;
+    };
 }
 
 export default new UserService();

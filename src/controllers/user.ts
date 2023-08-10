@@ -1,25 +1,23 @@
-import  {Request, Response} from 'express'
-import {UserService} from '../services';
+import { Request, Response } from 'express';
+import { UserService } from '../services';
 
 class UserController {
-    
     //Getting all users
-    public getUsers = async (req:Request, res: Response) => {
+    public getUsers = async (req: Request, res: Response) => {
         const users = await UserService.getAll(req, res);
 
-        if (!users){
+        if (!users) {
             return res.status(404).send({
                 status: 'NOT_FOUND',
-                message: `User not found.`
+                message: `User not found.`,
             });
-
         }
         res.status(200).json({
             status: 'OK',
             users,
         });
     };
- 
+
     //Registering a new user
     public registerUsers = async (req: Request, res: Response) => {
         const { firstName, lastName, userName, email, password } = req.body;
@@ -65,6 +63,24 @@ class UserController {
         } catch (error) {
             res.status(400).json({ error: error.message });
         }
+    };
+
+    /**
+     * Retrieve a single user
+     */
+    public getUser = async (req: Request, res: Response) => {
+        const id = Number(req.params.id);
+        const user = await UserService.getuser(req, res, id);
+        if (!user) {
+            return res.status(404).send({
+                status: 'NOT_FOUND',
+                message: `User not found.`,
+            });
+        }
+        res.status(200).json({
+            status: 'OK',
+            user,
+        });
     };
 }
 
