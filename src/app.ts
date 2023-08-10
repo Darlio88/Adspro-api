@@ -6,16 +6,28 @@ import helmet from 'helmet';
 import { Logger } from '../logger';
 import { CommonRoutesConfig } from './configs/routes.config';
 import { UserRoutes } from './api/routes';
+import { ProductRoutes } from './api/routes';
 
 const app: Application = express();
 const routes: Array<CommonRoutesConfig> = [];
+
+
 
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
 
+
+
 //Add Routes here (to routes array)
 routes.push(new UserRoutes(app));
+routes.push(new ProductRoutes(app));
+
+
+// Use static middleware to serve uploaded images
+app.use('/uploads', express.static('uploads'));
+// Use the product router for the /product endpoint
+//app.use('/product', ProductRoutes);
 
 
 //Health check
